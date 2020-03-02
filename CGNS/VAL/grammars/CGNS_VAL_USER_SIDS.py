@@ -1,1 +1,1 @@
-from CGNS.VAL.grammars.CGNS_VAL_USER_SIDS_ import *
+from CGNS.VAL.grammars.CGNS_VAL_USER_SIDS_ import *  # noqa

@@ -1,6 +1,6 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
@@ -102,9 +102,9 @@ def makeUnstTree(vertexsize, cellsize):
     s = NPY.array([[vertexsize, cellsize, 0]], dtype='int32', order='F')
     z = CGL.newZone(b, 'Zone', s, CGK.Unstructured_s)
     g = CGL.newGridCoordinates(z, 'GridCoordinates')
-    d = CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((vertexsize), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((vertexsize), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((vertexsize), dtype='float64', order='F'))
     return (T, b, z)
 
 
@@ -201,17 +201,17 @@ def makeStTree():
     b = CGL.newBase(T, '{Base}', 3, 3)
     z1 = CGL.newZone(b, '{Zone1}', NPY.array([[5, 4, 0], [7, 6, 0], [9, 8, 0]], order='F'))
     g = CGL.newGridCoordinates(z1, 'GridCoordinates')
-    d = CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((5, 7, 9), dtype='float64', order='F'))
     z2 = CGU.copyNode(z1, '{Zone2}')
     b[2].append(z2)
     zgc = CGL.newZoneGridConnectivity(z1)
-    gc = CGL.newGridConnectivity1to1(zgc, 'join1_2', '{Zone2}', NPY.array([[1, 1], [1, 4], [1, 9]]),
-                                     NPY.array([[5, 5], [3, 7], [1, 9]]), NPY.array([-1, +2, +3]))
+    CGL.newGridConnectivity1to1(zgc, 'join1_2', '{Zone2}', NPY.array([[1, 1], [1, 4], [1, 9]]),
+                                NPY.array([[5, 5], [3, 7], [1, 9]]), NPY.array([-1, +2, +3]))
     zgc = CGL.newZoneGridConnectivity(z2)
-    gc = CGL.newGridConnectivity1to1(zgc, 'join2_1', '{Zone1}', NPY.array([[5, 5], [3, 7], [1, 9]]),
-                                     NPY.array([[1, 1], [1, 4], [1, 9]]), NPY.array([-1, +2, +3]))
+    CGL.newGridConnectivity1to1(zgc, 'join2_1', '{Zone1}', NPY.array([[5, 5], [3, 7], [1, 9]]),
+                                NPY.array([[1, 1], [1, 4], [1, 9]]), NPY.array([-1, +2, +3]))
     zbc = CGL.newZoneBC(z1)
     n = CGL.newBoundary(zbc, '{BC1_1}', [[5, 5], [1, 7], [1, 9]], btype=CGK.Null_s, family=None,
                         pttype=CGK.PointRange_s)

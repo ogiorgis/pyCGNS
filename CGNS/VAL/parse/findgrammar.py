@@ -1,6 +1,6 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS - Python package for CFD General Notation System -
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
@@ -19,7 +19,7 @@ PROFILENAME = 'grammars'
 def readProfile():
     try:
         hdir = os.environ['HOME']
-    except:
+    except KeyError:
         return {}
     pdir = '%s%s.CGNS.NAV' % (hdir, os.path.sep)
     if not os.path.exists(pdir):
@@ -124,7 +124,7 @@ def importUserGrammars(key, recurse=False, verbose=False):
         else:
             # print '### CGNS.VAL [info]: Module info',tp
             mod = imp.load_dynamic(modname, tp[1], tp[0])
-    except:
+    except Exception:
         pass
     finally:
         if fp:

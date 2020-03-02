@@ -1,15 +1,12 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import division
-from builtins import (str, bytes, range, dict)
+from builtins import str
 
-from CGNS.NAV.moption import Q7OptionContext as OCTXT
-
-import CGNS.PAT.cgnsutils as CGU
 import CGNS.PAT.cgnskeywords as CGK
 
 from qtpy.QtCore import Qt, QModelIndex
@@ -17,21 +14,20 @@ from qtpy.QtWidgets import QStyledItemDelegate
 
 from CGNS.NAV.Q7FormWindow import Ui_Q7FormWindow
 from CGNS.NAV.mtable import Q7TableModel
-from CGNS.NAV.wstylesheets import Q7TABLEVIEWSTYLESHEET
 from CGNS.NAV.wfingerprint import Q7Window
 
 
 # -----------------------------------------------------------------
 def divpairs(n):
     d = n
-    l = []
+    pairs = []
     while d != 0:
         m = n // d
         r = n % d
         if r == 0:
-            l += [(d, m)]
+            pairs += [(d, m)]
         d -= 1
-    return l
+    return pairs
 
 
 # -----------------------------------------------------------------
@@ -88,7 +84,7 @@ class Q7Form(Q7Window, Ui_Q7FormWindow):
         its = 1
         for x in dims:
             its *= x
-        ndz = its * self._node.sidsDataTypeSize()
+        # ndz = its * self._node.sidsDataTypeSize()
         self.eDims.setText(str(dims))
         self.setDataType(self._node)
         self.eItems.setText(str(its))

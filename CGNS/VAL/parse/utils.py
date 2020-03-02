@@ -1,17 +1,21 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 import numpy as NPY
 
 
 def transformCheckValues(data, cdim):
-    if (int(cdim) not in (1, 2, 3)): return False
+    if (int(cdim) not in (1, 2, 3)):
+        return False
     adata = map(abs, data)
-    if ((cdim == 1) and (1 not in adata)): return False
-    if ((cdim == 2) and (set(adata) != set((1, 2)))): return False
-    if ((cdim == 3) and (set(adata) != set((1, 2, 3)))): return False
+    if ((cdim == 1) and (1 not in adata)):
+        return False
+    if ((cdim == 2) and (set(adata) != set((1, 2)))):
+        return False
+    if ((cdim == 3) and (set(adata) != set((1, 2, 3)))):
+        return False
     return True
 
 

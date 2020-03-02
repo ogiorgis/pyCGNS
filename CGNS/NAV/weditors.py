@@ -1,12 +1,10 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS.NAV - Python package for CFD General Notation System - NAVigater
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
-
-#from CGNS.NAV.moption import Q7OptionContext as OCTXT
+from builtins import str
 
 import re
 
@@ -55,7 +53,7 @@ class Q7PythonEditorHighlighter(QSyntaxHighlighter):
         autovars = r"\bNODE\b|\bNAME\b|\bVALUE\b|\bSIDSTYPE\b|\bCHILDREN\b"
         autovars += r"|\bTREE\b|\bPATH\b|\bRESULT\b|\bARGS\b|\bPARENT\b"
         autovars += r"|\bLINKS\b|\bSKIPS\b|\bSELECTED\b"
-        numbers = r'[-+]?\d+' + '|[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?'
+        numbers = r'[-+]?\d+' + '|[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?'  # noqa
         comment = r'\#.*$'
         textstring = r'"[^"]*?"|\'[^\']*?\''
         self.f_keywords = QTextCharFormat()

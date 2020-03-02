@@ -1,11 +1,11 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS.NAV - Python package for CFD General Notation System - NAVigater
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict)
+from builtins import (str, range)
 
 from CGNS.pyCGNSconfig import HAS_PY2
 
@@ -16,8 +16,7 @@ from qtpy.QtGui import (QColor, QPalette)
 from CGNS.NAV.wfingerprint import Q7FingerPrint
 from CGNS.NAV.Q7ToolsWindow import Ui_Q7ToolsWindow
 from CGNS.NAV.wfingerprint import Q7Window
-from CGNS.NAV.wquery import Q7Query, Q7SelectionList
-from CGNS.NAV.moption import Q7OptionContext as OCTXT
+from CGNS.NAV.wquery import Q7Query
 from CGNS.NAV.diff import diffAB
 from CGNS.NAV.merge import mergeAB
 from CGNS.NAV.mmergetreeview import (Q7TreeMergeModel, TAG_FRONT, TAG_BACK)
@@ -123,7 +122,7 @@ class Q7ToolsView(Q7Window, Ui_Q7ToolsWindow):
         print(self.cSIDStype.currentText())
 
     def updateCriteria(self):
-        l = self.sLevel.value()
+        level = self.sLevel.value()
         p = self.previousLevel
         self.criteria[p].name = self.eName.text()
         self.criteria[p].sidstype = self.cSIDStype.currentText()
@@ -131,15 +130,15 @@ class Q7ToolsView(Q7Window, Ui_Q7ToolsWindow):
         self.criteria[p].not_name = self.cNotName.isChecked()
         self.criteria[p].rgx_sids = self.cRegexpSIDStype.isChecked()
         self.criteria[p].not_sids = self.cNotSIDStype.isChecked()
-        self.eName.setText(self.criteria[l].name)
-        st = self.criteria[l].sidstype
+        self.eName.setText(self.criteria[level].name)
+        st = self.criteria[level].sidstype
         self.cSIDStype.setCurrentIndex(self.cSIDStype.findText(st))
-        self.cRegexpName.setChecked(self.criteria[l].rgx_name)
-        self.cNotName.setChecked(self.criteria[l].not_name)
-        self.cRegexpSIDStype.setChecked(self.criteria[l].rgx_sids)
-        self.cNotSIDStype.setChecked(self.criteria[l].not_sids)
-        self.previousLevel = l
-        self.gCriteria.setTitle(self.criteria[l].title)
+        self.cRegexpName.setChecked(self.criteria[level].rgx_name)
+        self.cNotName.setChecked(self.criteria[level].not_name)
+        self.cRegexpSIDStype.setChecked(self.criteria[level].rgx_sids)
+        self.cNotSIDStype.setChecked(self.criteria[level].not_sids)
+        self.previousLevel = level
+        self.gCriteria.setTitle(self.criteria[level].title)
 
     def model(self):
         return self._fgprint.model

@@ -1,6 +1,6 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 # Get a link list and a search path list and check it, return diag list
@@ -84,9 +84,7 @@
 from __future__ import unicode_literals
 from __future__ import print_function
 import CGNS.MAP
-import CGNS.PAT.cgnsutils      as CGU
-import CGNS.PAT.cgnstypes      as CGT
-import CGNS.PAT.cgnskeywords   as CGK
+import CGNS.PAT.cgnsutils as CGU
 import math
 import os
 
@@ -119,7 +117,8 @@ class CGNSGraph(object):
         return self.fileindex.index(fn) + 1
 
     def parseOneFile(self, filename):
-        if (not self.addCanonicalFilename(filename)): return
+        if (not self.addCanonicalFilename(filename)):
+            return
         flags = CGNS.MAP.S2P_NODATA | CGNS.MAP.S2P_FOLLOWLINKS
         (t, l, p) = CGNS.MAP.load(filename, flags, lksearch=['.'])
         idx = self.filenameIndex(filename)

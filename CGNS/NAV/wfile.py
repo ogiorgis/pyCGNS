@@ -1,18 +1,16 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import (str, bytes, range)
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
 import os.path
 import stat
-import string
 import time
-import sys
 
 from CGNS.pyCGNSconfig import HAS_PY2, HAS_MSW
 

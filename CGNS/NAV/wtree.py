@@ -1,18 +1,16 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import range
 
-import sys
-import gc
 import functools
 
 import CGNS.PAT.cgnskeywords as CGK
-import CGNS.PAT.cgnsutils    as CGU
-import CGNS.PAT.SIDS         as CGS
+import CGNS.PAT.cgnsutils as CGU
+import CGNS.PAT.SIDS as CGS
 
 from qtpy.QtCore import Qt, QModelIndex
 from qtpy.QtWidgets import (QStyledItemDelegate, QLineEdit, QComboBox, QSizePolicy,
@@ -27,7 +25,6 @@ from CGNS.NAV.wpattern import Q7PatternList
 from CGNS.NAV.wquery import Q7Query, Q7SelectionList
 from CGNS.NAV.wdiag import Q7CheckList
 from CGNS.NAV.wlink import Q7LinkList
-from CGNS.NAV.mtree import (Q7TreeModel, Q7TreeItem)
 from CGNS.NAV.wfingerprint import Q7Window, Q7FingerPrint
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
@@ -47,10 +44,14 @@ class Q7TreeItemDelegate(QStyledItemDelegate):
         self._model = model
 
     def createEditor(self, parent, option, index):
-        if (self._parent.isLocked()): return None
-        if (index.internalPointer().sidsIsCGNSTree()): return None
-        if (index.internalPointer().sidsIsLink()): return None
-        if (index.internalPointer().sidsIsLinkChild()): return None
+        if (self._parent.isLocked()):
+            return None
+        if (index.internalPointer().sidsIsCGNSTree()):
+            return None
+        if (index.internalPointer().sidsIsLink()):
+            return None
+        if (index.internalPointer().sidsIsLinkChild()):
+            return None
         ws = option.rect.width()
         hs = option.rect.height() + 4
         xs = option.rect.x()
@@ -115,7 +116,7 @@ class Q7TreeItemDelegate(QStyledItemDelegate):
             itemslist = self._parent.modelData(index).sidsDataType(all=True)
             editor.addItems(itemslist)
             editor.installEventFilter(self)
-            sizePolicy = QSizePolicy(QSizePolicy.Minimum,QSizePolicy.Minimum)
+            sizePolicy = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Minimum)
             editor.setSizePolicy(sizePolicy)
             self.setEditorData(editor, index)
             return editor
@@ -129,8 +130,9 @@ class Q7TreeItemDelegate(QStyledItemDelegate):
         elif (self._mode == CELLCOMBO):
             value = index.data()
             ix = editor.findText(value)
-            print('VALUE',value,ix)
-            if (ix != -1): editor.setCurrentIndex(ix)
+            print('VALUE', value, ix)
+            if (ix != -1):
+                editor.setCurrentIndex(ix)
         else:
             pass
 
@@ -140,7 +142,7 @@ class Q7TreeItemDelegate(QStyledItemDelegate):
             value = editor.currentText()
         if (self._mode == CELLTEXT):
             value = editor.text()
-        pth = self._parent.modelData(index).sidsPath()
+        # pth = self._parent.modelData(index).sidsPath()
         model.setData(index, value, role=Qt.EditRole)
         node = index.internalPointer().lastEdited()
         if (node is not None):
@@ -155,7 +157,7 @@ class Q7TreeItemDelegate(QStyledItemDelegate):
     def paint(self, painter, option, index):
         if (self._parent.modelIndex(index).column() == NMT.COLUMN_NAME):
             if (self._parent.modelData(index).sidsName()
-                not in OCTXT._ReservedNames):
+                    not in OCTXT._ReservedNames):
                 option.font.setWeight(QFont.Bold)
             uf = self._parent.modelData(index).userState()
             if (uf in NMT.USERSTATES):
@@ -201,7 +203,7 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                         NMT.COLUMN_DATATYPE: OCTXT.ShowDataTypeColumn}
         self.selectForLinkSrc = None  # one link source per tree view allowed
 
-        #self.treeview.expanded[QModelIndex].connect(self.expandNode)
+        # self.treeview.expanded[QModelIndex].connect(self.expandNode)
         self.treeview.collapsed.connect(self.collapseNode)
         self.treeview.pressed[QModelIndex].connect(self.clickedPressedNode)
         self.treeview.customContextMenuRequested.connect(self.clickedNode)
@@ -255,7 +257,8 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
         self.treeview.setControlWindow(self, self.FG.index)
         if (self._control.transientRecurse or OCTXT.RecursiveTreeDisplay):
             self.expandMinMax()
-        if (self._control.transientVTK): self.vtkview()
+        if (self._control.transientVTK):
+            self.vtkview()
         self._control.transientRecurse = False
         self._control.transientVTK = False
         self.clearchecks()
@@ -374,7 +377,8 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
         self.resizeAll()
 
     def collapseLevel(self):
-        if (self._depthExpanded != -1): self._depthExpanded -= 1
+        if (self._depthExpanded != -1):
+            self._depthExpanded -= 1
         if (self._depthExpanded == -1):
             self.treeview.collapseAll()
         else:
@@ -454,28 +458,31 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
 
     def updateMenu(self, nodeidxs):
         nodeidx = self.modelIndex(nodeidxs)
-        if (not nodeidx.isValid): return False
-        if (nodeidx.internalPointer() is None): return False
-        if (nodeidx.internalPointer().sidsPath() == '/CGNSTree'): return False
+        if (not nodeidx.isValid):
+            return False
+        if (nodeidx.internalPointer() is None):
+            return False
+        if (nodeidx.internalPointer().sidsPath() == '/CGNSTree'):
+            return False
         self.setLastEntered(nodeidxs)
         if (nodeidx != -1):
             node = nodeidx.internalPointer()
-            lknode = not node.sidsIsLink()
+            # lknode = not node.sidsIsLink()
             lznode = node.hasLazyLoad()
             actlist = (
                 ("%s goodies" % node.sidsType(),),
                 None,
                 ("Expand sub-tree from this node", self.expand_sb, 'Ctrl++', False),
-                ("Collapses sub-tree from this node", self.collapse_sb, 'Ctrl+-', False),                
+                ("Collapses sub-tree from this node", self.collapse_sb, 'Ctrl+-', False),
                 None,
-                ['Mark nodes...',[
-                ("Mark/unmark node", self.marknode, 'Space', False),
-                 None,
-                ("Mark all nodes same SIDS type", self.marknode_t, 'Ctrl+1', False),
-                ("Mark all nodes same name", self.marknode_n, 'Ctrl+2', False),
-                ("Mark all nodes same value", self.marknode_v, 'Ctrl+3', False),
-                 None,
-                ("Mark parent path", self.marknode_p, 'Ctrl+4', False)]],
+                ['Mark nodes...', [
+                    ("Mark/unmark node", self.marknode, 'Space', False),
+                    None,
+                    ("Mark all nodes same SIDS type", self.marknode_t, 'Ctrl+1', False),
+                    ("Mark all nodes same name", self.marknode_n, 'Ctrl+2', False),
+                    ("Mark all nodes same value", self.marknode_v, 'Ctrl+3', False),
+                    None,
+                    ("Mark parent path", self.marknode_p, 'Ctrl+4', False)]],
                 ("Add new child node", self.newnodechild, 'Ctrl+A', False),
                 ("Add new brother node", self.newnodebrother, 'Ctrl+Z', False),
                 #            None,
@@ -491,20 +498,20 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                 ("Paste as brother", self.mpasteasbrother, 'Ctrl+V', False),
                 ("Paste as child", self.mpasteaschild, 'Ctrl+Y', False),
                 None,
-                ['On selected nodes...',[
-                ("Expand sub-tree from all selected nodes", self.sexpand_sb, 'Ctrl+Shift++', False),
-                ("Collapses sub-tree from all selected nodes", self.scollapse_sb, 'Ctrl+Shift+-', False),
-                None,
-                ("Cut all selected", self.mcutselected, 'Ctrl+Shift+X', False),
-                ("Paste as brother for each selected",
-                 self.mpasteasbrotherselected, 'Ctrl+Shift+V', False),
-                ("Paste as child for each selected",
-                 self.mpasteaschildselected, 'Ctrl+Shift+Y', False),
-                 None,
-                ("Load nodes data in memory for each selected",
-                 self.dataLoadSelected, 'Ctrl+Shift+L', False),
-                ("Release memory node data for each selected",
-                 self.dataReleaseSelected, 'Ctrl+Shift+R', False)]],
+                ['On selected nodes...', [
+                    ("Expand sub-tree from all selected nodes", self.sexpand_sb, 'Ctrl+Shift++', False),
+                    ("Collapses sub-tree from all selected nodes", self.scollapse_sb, 'Ctrl+Shift+-', False),
+                    None,
+                    ("Cut all selected", self.mcutselected, 'Ctrl+Shift+X', False),
+                    ("Paste as brother for each selected",
+                     self.mpasteasbrotherselected, 'Ctrl+Shift+V', False),
+                    ("Paste as child for each selected",
+                     self.mpasteaschildselected, 'Ctrl+Shift+Y', False),
+                    None,
+                    ("Load nodes data in memory for each selected",
+                     self.dataLoadSelected, 'Ctrl+Shift+L', False),
+                    ("Release memory node data for each selected",
+                     self.dataReleaseSelected, 'Ctrl+Shift+R', False)]],
             )
             self.popupmenu.clear()
             self.popupmenu.setTitle('Node menu')
@@ -524,19 +531,21 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                     if (hasattr(self, tag)):
                         getattr(self, tag)(subm, node)
                 else:
-                    if isinstance(aparam,list):
+                    if isinstance(aparam, list):
                         subm = self.popupmenu.addMenu(aparam[0])
                         for aaparam in aparam[1]:
                             if (aaparam is None):
-                                 subm.addSeparator()
+                                subm.addSeparator()
                             else:
                                 a = QAction(aaparam[0], self, triggered=aaparam[1])
-                                if (aaparam[2] is not None): a.setShortcut(aaparam[2])
+                                if (aaparam[2] is not None):
+                                    a.setShortcut(aaparam[2])
                                 subm.addAction(a)
                                 a.setDisabled(aaparam[3])
                     else:
                         a = QAction(aparam[0], self, triggered=aparam[1])
-                        if (aparam[2] is not None): a.setShortcut(aparam[2])
+                        if (aparam[2] is not None):
+                            a.setShortcut(aparam[2])
                         self.popupmenu.addAction(a)
                         a.setDisabled(aparam[3])
             return True
@@ -562,7 +571,7 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                 return copyPattern
             a = QAction("{}".format(t), self, triggered=genCopyPattern(t))
             menu.addAction(a)
-        
+
     def _gm_family_1(self, node):
         self._runAndSelect('013. FamilyName reference', "'%s'" % node.sidsName())
 
@@ -659,16 +668,16 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
 
     def expand_sb(self):
         self.treeview.expand_sb()
-    
+
     def collapse_sb(self):
         self.treeview.collapse_sb()
-    
+
     def sexpand_sb(self):
         self.treeview.sexpand_sb()
-    
+
     def scollapse_sb(self):
         self.treeview.scollapse_sb()
-    
+
     def resizeAll(self):
         for n in range(NMT.COLUMN_LAST + 1):
             self.treeview.resizeColumnToContents(n)
@@ -678,7 +687,8 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
 
     def linkselectsrc(self):
         if (self.bSelectLinkSrc.isChecked()):
-            if (self.getLastEntered() is None): return
+            if (self.getLastEntered() is None):
+                return
             self.bAddLink.setDisabled(False)
             node = self.getLastEntered()
             self.selectForLinkSrc = (node, node.sidsPath())
@@ -687,11 +697,15 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
             self.selectForLinkSrc = None
 
     def linkselectdst(self):
-        if (self.getLastEntered() is None): return
+        if (self.getLastEntered() is None):
+            return
         node = self.getLastEntered()
-        if (node is None):  return
-        if (node.sidsIsLink()): return
-        if (node.sidsType() == CGK.CGNSTree_ts): return
+        if (node is None):
+            return
+        if (node.sidsIsLink()):
+            return
+        if (node.sidsType() == CGK.CGNSTree_ts):
+            return
         if (self._control.selectForLinkDst is not None):
             bt = self._control.selectForLinkDst[-1].bSelectLinkDst
             bt.setChecked(Qt.Unchecked)
@@ -710,7 +724,8 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
             self._linkwindow.updateSelected(d, f, n)
 
     def linkadd(self):
-        if (self._control.selectForLinkDst is None): return
+        if (self._control.selectForLinkDst is None):
+            return
         dst = self._control.selectForLinkDst
         str_dst = "%s:%s" % (dst[3], dst[1])
         tpath = 'relative'
@@ -728,10 +743,10 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                       newname
         str_src = "%s:%s/%s" % (self.FG.filename,
                                 self.selectForLinkSrc[1], newname)
-        str_msg = "you want to create a link from <b>%s</b> to <b>%s</b><br>%s<br>Your current user options do force " \
-                  "the link to use <b>%s</b> destination file path.""" % (
-        str_src, str_dst, str_cnm, tpath)
-        reply = MSG.wQuestion(self, 231, 'Create link as a new node', str_msg)
+        str_msg = """you want to create a link from <b>%s</b> to <b>%s</b><br>%s<br>Your current user options do force
+                     the link to use <b>%s</b> destination file path.""" % (
+                         str_src, str_dst, str_cnm, tpath)
+        MSG.wQuestion(self, 231, 'Create link as a new node', str_msg)  # FIXME: return value not used
 
     def linklist(self):
         if (self._linkwindow is None):
@@ -757,7 +772,8 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
         self.bCheckList.setDisabled(False)
 
     def checklist(self):
-        if (self.lastdiag is None): return
+        if (self.lastdiag is None):
+            return
         self.diagview = Q7CheckList(self, self.lastdiag, self.FG.index)
         self.diagview.show()
 
@@ -804,12 +820,14 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
                       """You have to select a node to open its form view""",
                       again=False)
             return
-        if (node.sidsType() == CGK.CGNSTree_ts): return
+        if (node.sidsType() == CGK.CGNSTree_ts):
+            return
         form = Q7Form(self._control, node, self.FG.index)
         form.show()
 
     def vtkview(self):
-        if (not HAS_VTK): return
+        if (not HAS_VTK):
+            return
         from CGNS.NAV.wvtk import Q7VTK
         if (self._vtkwindow is None):
             self.busyCursor()
@@ -838,7 +856,7 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
             self._querywindow.raise_()
 
     def aboutSIDS(self):
-        path = self.getLastEntered().sidsPath()
+        self.getLastEntered().sidsPath()  # FIXME: doesn't do anything
 
     def dataLoadSelected(self):
         self.model().dataLoadSelected()
@@ -859,7 +877,7 @@ class Q7Tree(Q7Window, Ui_Q7TreeWindow):
 
     def updateTreeStatus(self):
         if ((Q7FingerPrint.STATUS_MODIFIED in self.FG._status)
-            and (Q7FingerPrint.STATUS_SAVEABLE in self.FG._status)):
+                and (Q7FingerPrint.STATUS_SAVEABLE in self.FG._status)):
             self.bSave.setEnabled(True)
         else:
             self.bSave.setEnabled(False)

@@ -1,11 +1,11 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict, type)
+from builtins import str, range
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
@@ -23,7 +23,7 @@ from qtpy.QtCore import Qt, QThread, QMutex, Signal
 from qtpy.QtWidgets import QWidget
 from qtpy.QtGui import (QIcon, QPixmap, QFont, QCursor)
 
-from CGNS.NAV.wstylesheets import Q7TREEVIEWSTYLESHEET, Q7TABLEVIEWSTYLESHEET
+from CGNS.NAV.wstylesheets import Q7TREEVIEWSTYLESHEET
 from CGNS.NAV.wstylesheets import Q7CONTROLVIEWSTYLESHEET
 from CGNS.NAV.wfile import checkFilePermission
 
@@ -56,7 +56,9 @@ class Q7CHLoneProxy(object):
     def load(self, control, selectedfile):
         self._control = control
         self._thread = Q7CHLoneThread(control, selectedfile)
-        self._thread.datacompleted.connect(self.proxyCompleted,Qt.QueuedConnection)
+        self._thread.datacompleted.connect(
+            self.proxyCompleted, Qt.QueuedConnection
+        )
         self._data = None
         if self._hasthreads:
             self._thread.start()
@@ -68,7 +70,7 @@ class Q7CHLoneProxy(object):
         return self._data
 
     # not useful anymore ?
-    #@Slot(tuple, name='proxyCompleted')
+    # @Slot(tuple, name='proxyCompleted')
     def proxyCompleted(self, data):
         if data[0] is None:
             self._data = data
@@ -132,7 +134,7 @@ class Q7CHLoneThread(QThread):
                                                      lksearch=slp)
         except CGNS.MAP.error as chlex:
             Q7FingerPrint.Unlock()
-            txt = """Load aborted by CGNS.MAP (file:%s)"""%loadfilename
+            txt = """Load aborted by CGNS.MAP (file:%s)""" % loadfilename
             code = chlex.args[0][0]
             msg = chlex.args[0][1]
             self._data = (None, (code, msg, txt))
@@ -244,9 +246,9 @@ class Q7Window(QWidget, object):
         self._index = self.addChildWindow()
         self._lockableWidgets = []
         self._lockedWidgets = []
-        fn = ''
-        if self._fgindex != -1:
-            fn = Q7FingerPrint.getByIndex(self._fgindex).filename
+        # fn = ''
+        # if self._fgindex != -1:
+        #     fn = Q7FingerPrint.getByIndex(self._fgindex).filename
         if self._index != 0:
             tit = "%s: %s%.3d" % (OCTXT._ToolName, self._vtype, self._index)
         else:
@@ -398,7 +400,7 @@ class Q7Window(QWidget, object):
 
     def getLastFile(self):
         if ((self._history == {}) or
-                    Q7Window.HISTORYLASTKEY not in self._history):
+                Q7Window.HISTORYLASTKEY not in self._history):
             return None
         return self._history[Q7Window.HISTORYLASTKEY]
 
@@ -406,9 +408,9 @@ class Q7Window(QWidget, object):
         if self.FG is None:
             return 0
         self._index = self.FG.addChild(self._vtype, self)
-        l = [self.FG._status, self._vtype, '%.3d' % self._index]
-        l += [self.FG.filedir, self.FG.filename, self._path]
-        self._control.addLine(l, self.FG)
+        line = [self.FG._status, self._vtype, '%.3d' % self._index]
+        line += [self.FG.filedir, self.FG.filename, self._path]
+        self._control.addLine(line, self.FG)
         return self._index
 
     def closeEvent(self, event):
@@ -635,10 +637,10 @@ class Q7FingerPrint:
 
     @classmethod
     def getExpandedFilenameList(cls):
-        l = []
+        filenames = []
         for x in cls.__extension:
-            l.append("%s/%s" % (x.filedir, x.filename))
-        return l
+            filenames.append("%s/%s" % (x.filedir, x.filename))
+        return filenames
 
     @classmethod
     def removeNoMoreView(cls):
@@ -687,7 +689,7 @@ class Q7FingerPrint:
         for p in paths:
             self.lazy['/CGNSTree' + p[0]] = p[1]
         if ((self.lazy == {}) and
-            (checkFilePermission(filedir + '/' + filename, write=True))):
+                (checkFilePermission(filedir + '/' + filename, write=True))):
             self._status = [Q7FingerPrint.STATUS_SAVEABLE]
         Q7FingerPrint.__extension.append(self)
         Q7FingerPrint.__fingerprintcounter += 1
@@ -709,8 +711,9 @@ class Q7FingerPrint:
             flags |= CGNS.MAP.S2P_TRACE
         if OCTXT.FollowLinksAtLoad:
             flags |= CGNS.MAP.S2P_FOLLOWLINKS
-        (t, l, p) = CGNS.MAP.load(tfile, flags=flags, path=minpath, lksearch=slp,
-                                  update=pathdict)
+        (t, l, p) = CGNS.MAP.load(
+            tfile, flags=flags, path=minpath, lksearch=slp, update=pathdict
+        )
         return (t, l, p)
 
     def updateFileStats(self, fname, saveas=False):
@@ -844,7 +847,7 @@ class Q7FingerPrint:
 
     def closeView(self, i):
         idx = int(i)
-        fg = self.getFingerPrint(idx)
+        # fg = self.getFingerPrint(idx)
         vw = self.getView(idx)
         if vw is not None:
             vt = self.getViewType(idx)
@@ -899,7 +902,7 @@ class Q7FingerPrint:
     def pushGrammarPaths(self):
         if not OCTXT.ValKeyList:
             return
-        tag = OCTXT.ValKeyList[0]
+        # tag = OCTXT.ValKeyList[0]
         pths = []
         self._oldsys = sys.path
         for p in OCTXT.GrammarSearchPathList:

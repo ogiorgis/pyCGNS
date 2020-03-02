@@ -1,21 +1,18 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import range
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
 import sys
-import numpy
 import os
 import importlib
 import glob
 
-import CGNS.PAT.cgnsutils as CGU
-import CGNS.PAT.cgnskeywords as CGK
 import CGNS.PAT.SIDS
 
 from qtpy.QtCore import Qt
@@ -24,6 +21,7 @@ from qtpy.QtGui import QFont
 
 from CGNS.NAV.Q7PatternWindow import Ui_Q7PatternWindow
 from CGNS.NAV.wfingerprint import Q7Window as QW
+
 
 # -----------------------------------------------------------------
 class Q7PatternList(QW, Ui_Q7PatternWindow):
@@ -105,8 +103,6 @@ class Q7PatternList(QW, Ui_Q7PatternWindow):
         tlvcolsnames = ['S', 'Pattern', 'P', 'Comment']
         v = self.patternTable
         v.setColumnCount(tlvcols)
-        lh = v.horizontalHeader()
-        lv = v.verticalHeader()
         h = tlvcolsnames
         n = len(h)
         for i in range(n):

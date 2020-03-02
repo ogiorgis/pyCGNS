@@ -1,20 +1,17 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS.NAV - Python package for CFD General Notation System - NAVigater
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict)
+from builtins import (str, range)
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
-import sys
 import numpy
 import os
 
-import CGNS.PAT.cgnsutils as CGU
-import CGNS.PAT.cgnskeywords as CGK
 
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import (QFileDialog, QStyledItemDelegate, QLineEdit, QComboBox, QTableWidgetItem, QMessageBox)
@@ -24,9 +21,7 @@ from CGNS.NAV.Q7QueryWindow import Ui_Q7QueryWindow
 from CGNS.NAV.Q7SelectionWindow import Ui_Q7SelectionWindow
 from CGNS.NAV.wfingerprint import Q7Window
 from CGNS.NAV.mquery import Q7QueryEntry
-from CGNS.NAV.mtree import (COLUMN_VALUE, COLUMN_DATATYPE,
-                            COLUMN_SIDS, COLUMN_NAME,
-                            HIDEVALUE)
+from CGNS.NAV.mtree import (COLUMN_VALUE, COLUMN_DATATYPE, COLUMN_SIDS, HIDEVALUE)
 import CGNS.NAV.wmessages as MSG
 
 (CELLCOMBO, CELLTEXT) = range(2)
@@ -57,21 +52,21 @@ class Q7SelectionItemDelegate(QStyledItemDelegate):
         if index.column() == 2:
             self._lastCol = COLUMN_SIDS
             if self._parent.cForce.checkState() != Qt.Checked:
-              self._mode = CELLTEXT
-              editor = QLineEdit(parent)
-              editor.transgeometry = (xs, ys, ws, hs)
+                self._mode = CELLTEXT
+                editor = QLineEdit(parent)
+                editor.transgeometry = (xs, ys, ws, hs)
             else:
-              self._mode = CELLCOMBO
-              editor = QComboBox(parent)
-              editor.transgeometry = (xs, ys, ws, hs)
-              itemslist = tnode.sidsTypeList()
-              editor.addItems(itemslist)
-              try:
-                tix = itemslist.index(tnode.sidsType())
-              except ValueError:
-                editor.insertItem(0, tnode.sidsType())
-                tix = 0
-              editor.setCurrentIndex(tix)
+                self._mode = CELLCOMBO
+                editor = QComboBox(parent)
+                editor.transgeometry = (xs, ys, ws, hs)
+                itemslist = tnode.sidsTypeList()
+                editor.addItems(itemslist)
+                try:
+                    tix = itemslist.index(tnode.sidsType())
+                except ValueError:
+                    editor.insertItem(0, tnode.sidsType())
+                    tix = 0
+                editor.setCurrentIndex(tix)
             editor.installEventFilter(self)
             self.setEditorData(editor, index)
             return editor
@@ -286,8 +281,6 @@ class Q7SelectionList(Q7Window, Ui_Q7SelectionWindow):
         self._tb.clear()
         self._tb.setColumnCount(len(tlvcolsnames))
         self._tb.setRowCount(0)
-        lh = self._tb.horizontalHeader()
-        lv = self._tb.verticalHeader()
         for i, colname in enumerate(tlvcolsnames):
             hi = QTableWidgetItem(colname)
             self._tb.setHorizontalHeaderItem(i, hi)
@@ -543,7 +536,7 @@ class Q7Query(Q7Window, Ui_Q7QueryWindow):
     def loadUserFunctions(cls):
         try:
             Q7Query._userFunction = OCTXT._readFunctions(cls)()
-        except:
+        except Exception:
             Q7Query._userFunction = None
 
     @classmethod

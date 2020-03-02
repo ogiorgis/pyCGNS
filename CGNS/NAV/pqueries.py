@@ -1,10 +1,11 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import (str, bytes)
+
 
 def asQuery(f):
     def prepostquery(node, parent, tree, links, skips, path, args, selected):
@@ -30,7 +31,6 @@ def asQuery(f):
         import CGNS.PAT.cgnskeywords as CGK
         import CGNS.PAT.cgnsutils as CGU
         import CGNS.PAT.cgnslib as CGL
-        import CGNS.MAP as CGM
         import numpy
 
         QueryNoException = True
@@ -95,7 +95,7 @@ def runQuery(tree, links, paths, query, args, selected=None, mode=True):
     selected: the RETURNED list of values
     mode: True (defaut) a boolean list is returned for every node in the tree,
     False a list of the (True) paths is returned
-    
+
     The match between results and paths can be performed with help of the
     breadth-first paths order function in CGNS.PAT
     """
@@ -109,7 +109,7 @@ def runQuery(tree, links, paths, query, args, selected=None, mode=True):
             v = (v,)
     except NameError:
         v = (str(args),)
-    except:
+    except Exception:
         pass
     _args = v
     if isinstance(query, (str, bytes)):

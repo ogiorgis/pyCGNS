@@ -1,17 +1,17 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS.NAV - Python package for CFD General Notation System - NAVigater
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import range
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
 import CGNS.PAT.cgnsutils as CGU
 
 from qtpy.QtCore import (Qt, QModelIndex, QPoint)
-from qtpy.QtWidgets import (QStyledItemDelegate, QMenu)
+from qtpy.QtWidgets import (QStyledItemDelegate, QMenu, QAction)
 from qtpy.QtGui import (QColor, QFont, QIcon, QPixmap)
 
 from CGNS.NAV.Q7MergeWindow import Ui_Q7MergeWindow

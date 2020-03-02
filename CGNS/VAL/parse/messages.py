@@ -1,12 +1,9 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-import CGNS.PAT.cgnsutils as CGU
-import CGNS.PAT.cgnskeywords as CGK
-import string
 
 CHECK_NONE = 0
 CHECK_OK = CHECK_GOOD = CHECK_PASS = 1
@@ -73,7 +70,8 @@ class DiagnosticMessageInstance(DiagnosticMessagePattern):
     def substitute(self, *tp):
         msg = self._str
         try:
-            if (tp): msg = msg % tp
+            if (tp):
+                msg = msg % tp
         except TypeError:
             pass
         self._str = msg
@@ -96,7 +94,8 @@ class DiagnosticLog(dict):
         return self.__messages
 
     def noContextMessage(self, m):
-        if (DiagnosticLog.__messages[m].notSubst()): return None
+        if (DiagnosticLog.__messages[m].notSubst()):
+            return None
         return DiagnosticLog.__messages[m].message
 
     def addMessage(self, k, m):
@@ -107,9 +106,12 @@ class DiagnosticLog(dict):
             DiagnosticLog.__messages[e] = DiagnosticMessagePattern(e, d[e][0], d[e][1])
 
     def push(self, path, messagekey, *tp):
-        if (path is None): return
-        if (path not in self): self[path] = []
-        if (messagekey not in DiagnosticLog.__messages): return
+        if (path is None):
+            return
+        if (path not in self):
+            self[path] = []
+        if (messagekey not in DiagnosticLog.__messages):
+            return
         entry = DiagnosticMessageInstance(DiagnosticLog.__messages[messagekey])
         self[path].append(entry.substitute(*tp))
         return DiagnosticLog.__messages[messagekey].level
@@ -137,7 +139,8 @@ class DiagnosticLog(dict):
 
     def message(self, entry, path=None):
         shft = ''
-        if (path is not None): shft = self.shift(path)
+        if (path is not None):
+            shft = self.shift(path)
         s = '%s[%s:%s] %s' % (shft, entry.key, entry.levelAsStr(), entry.message)
         return s
 
@@ -147,12 +150,13 @@ class DiagnosticLog(dict):
             r = list(s)[0]
             for x in s:
                 r = getWorst(r, x)
-        except:
+        except Exception:
             r = CHECK_NONE
         return r
 
     def diagForPath(self, path):
-        if (path in self): return self[path]
+        if (path in self):
+            return self[path]
         return None
 
     def allMessageKeys(self):
@@ -179,7 +183,8 @@ class DiagnosticLog(dict):
         plist.sort()
         for path in plist:
             for diag in self[path]:
-                if (diag.key == msg): yield (diag, path)
+                if (diag.key == msg):
+                    yield (diag, path)
 
     def __str__(self):
         s = "{\n"

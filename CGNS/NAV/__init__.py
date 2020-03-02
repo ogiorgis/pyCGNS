@@ -1,8 +1,8 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
-# 
+#
 """
  implementation info:
 
@@ -19,21 +19,13 @@
 """
 from __future__ import unicode_literals
 
-def show(T, *args):
-    from CGNS.NAV.moption import Q7OptionContext as OCTXT
-    import qtpy.QtCore as QtCore
-    from qtpy.QtWidgets import QApplication, QSplashScreen
-    from qtpy.QtGui import QPixmap
-    from CGNS.NAV.wcontrol import Q7Main
 
-    from CGNS.NAV.wfile import Q7File
-    from CGNS.NAV.winfo import Q7Info
+def show(T, *args):
+    from qtpy.QtWidgets import QApplication
     from CGNS.NAV.woption import Q7Option
     from CGNS.NAV.wtree import Q7Tree
     from CGNS.NAV.mtree import Q7TreeModel
     from CGNS.NAV.wfingerprint import Q7FingerPrint
-    from CGNS.NAV.wquery import Q7Query
-    from CGNS.NAV.whelp import Q7Help
 
     def dummy(*args):
         pass

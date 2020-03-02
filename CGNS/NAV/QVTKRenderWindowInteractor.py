@@ -41,9 +41,9 @@ Changes by Fabian Wenzel, Jan. 2016
 """
 from __future__ import unicode_literals
 try:
-  from builtins import (str, bytes, range, dict)
+    from builtins import str
 except ImportError:
-  from __builtin__ import (str, bytes, range, dict)
+    from __builtin__ import str
 # Check whether a specific PyQt implementation was chosen
 try:
     import vtk.qt
@@ -63,15 +63,15 @@ except ImportError:
 if PyQtImpl is None:
     # Autodetect the PyQt implementation to use
     try:
-        import PyQt5
+        import PyQt5  # noqa
         PyQtImpl = "PyQt5"
     except ImportError:
         try:
-            import PyQt4
+            import PyQt4  # noqa
             PyQtImpl = "PyQt4"
         except ImportError:
             try:
-                import PySide
+                import PySide  # noqa
                 PyQtImpl = "PySide"
             except ImportError:
                 raise ImportError("Cannot load either PyQt or PySide")
@@ -84,7 +84,6 @@ if PyQtImpl == "PyQt5":
     from PyQt5.QtWidgets import QApplication
     from PyQt5.QtCore import Qt
     from PyQt5.QtCore import QTimer
-    from PyQt5.QtCore import QObject
     from PyQt5.QtCore import QSize
     from PyQt5.QtCore import QEvent
 elif PyQtImpl == "PyQt4":
@@ -95,7 +94,6 @@ elif PyQtImpl == "PyQt4":
     from PyQt4.QtGui import QApplication
     from PyQt4.QtCore import Qt
     from PyQt4.QtCore import QTimer
-    from PyQt4.QtCore import QObject
     from PyQt4.QtCore import QSize
     from PyQt4.QtCore import QEvent
 elif PyQtImpl == "PySide":
@@ -106,7 +104,6 @@ elif PyQtImpl == "PySide":
     from PySide.QtGui import QApplication
     from PySide.QtCore import Qt
     from PySide.QtCore import QTimer
-    from PySide.QtCore import QObject
     from PySide.QtCore import QSize
     from PySide.QtCore import QEvent
 else:
@@ -119,6 +116,7 @@ elif QVTKRWIBase == "QGLWidget":
     QVTKRWIBaseClass = QGLWidget
 else:
     raise ImportError("Unknown base class for QVTKRenderWindowInteractor " + QVTKRWIBase)
+
 
 class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
 
@@ -238,7 +236,7 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
         elif QVTKRWIBase == "QGLWidget":
             QGLWidget.__init__(self, parent)
 
-        if rw: # user-supplied render window
+        if rw:  # user-supplied render window
             self._RenderWindow = rw
         else:
             self._RenderWindow = vtk.vtkRenderWindow()
@@ -249,7 +247,7 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
         if type(WId).__name__ == 'PyCObject':
             from ctypes import pythonapi, c_void_p, py_object
 
-            pythonapi.PyCObject_AsVoidPtr.restype  = c_void_p
+            pythonapi.PyCObject_AsVoidPtr.restype = c_void_p
             pythonapi.PyCObject_AsVoidPtr.argtypes = [py_object]
 
             WId = pythonapi.PyCObject_AsVoidPtr(WId)
@@ -263,14 +261,14 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
 
             name = pythonapi.PyCapsule_GetName(WId)
 
-            pythonapi.PyCapsule_GetPointer.restype  = c_void_p
+            pythonapi.PyCapsule_GetPointer.restype = c_void_p
             pythonapi.PyCapsule_GetPointer.argtypes = [py_object, c_char_p]
 
             WId = pythonapi.PyCapsule_GetPointer(WId, name)
 
         self._RenderWindow.SetWindowInfo(str(int(WId)))
 
-        if stereo: # stereo mode
+        if stereo:  # stereo mode
             self._RenderWindow.StereoCapableWindowOn()
             self._RenderWindow.SetStereoTypeToCrystalEyes()
 
@@ -283,7 +281,7 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
         # do all the necessary qt setup
         self.setAttribute(Qt.WA_OpaquePaintEvent)
         self.setAttribute(Qt.WA_PaintOnScreen)
-        self.setMouseTracking(True) # get all mouse events
+        self.setMouseTracking(True)  # get all mouse events
         self.setFocusPolicy(Qt.WheelFocus)
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
@@ -295,9 +293,9 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
         self._Iren.GetRenderWindow().AddObserver('CursorChangedEvent',
                                                  self.CursorChangedEvent)
 
-        #Create a hidden child widget and connect its destroyed signal to its
-        #parent ``Finalize`` slot. The hidden children will be destroyed before
-        #its parent thus allowing cleanup of VTK elements.
+        # Create a hidden child widget and connect its destroyed signal to its
+        # parent ``Finalize`` slot. The hidden children will be destroyed before
+        # its parent thus allowing cleanup of VTK elements.
         self._hidden = QWidget(self)
         self._hidden.hide()
         self._hidden.destroyed.connect(self.Finalize)
@@ -310,7 +308,7 @@ class QVTKRenderWindowInteractor(QVTKRWIBaseClass):
             return getattr(self._Iren, attr)
         else:
             raise AttributeError(self.__class__.__name__ +
-                  " has no attribute named " + attr)
+                                 " has no attribute named " + attr)
 
     def Finalize(self):
         '''
@@ -607,6 +605,7 @@ _keysyms = {
     Qt.Key_NumLock: 'Num_Lock',
     Qt.Key_ScrollLock: 'Scroll_Lock',
     }
+
 
 def _qt_key_to_key_sym(key):
     """ Convert a Qt key into a vtk keysym.
