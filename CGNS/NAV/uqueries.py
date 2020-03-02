@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 #
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict)
 
 from CGNS.APP.lib.queries import asQuery
 from CGNS.APP.lib.queries import runQuery
+import CGNS.MAP as CGM
 
 
 @asQuery
@@ -55,8 +55,6 @@ FILE = 'HYB/vbv-part32_comp_period_links_dom_32_SUB.hdf'
 ARGS = ['GridLocation']
 
 # -----------------------------------------------------------------
-import CGNS.MAP as CGM
-
 (t, l, p) = CGM.load(FILE)
 print(runQuery(t, l, p, nodeNameSearch, ['GridLocation']))
 print(runQuery(t, l, p, nodeTokenSearch, ['Zone']))

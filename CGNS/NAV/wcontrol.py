@@ -1,10 +1,10 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import (str, range)
 
 from qtpy.QtCore import (Qt, QObject, Signal)
 from qtpy.QtWidgets import (QAction, QStyledItemDelegate, QStyleOptionViewItem,
@@ -62,7 +62,6 @@ class Q7Main(QW, Ui_Q7ControlWindow):
         QW.control_log = MSG.Q7Log()
         QW.__init__(self, QW.VIEW_CONTROL, self, None, None)
         self.versions = {'pycgnsversion': 'pyCGNS v%s' % config.version,
-                         #                       'chloneversion':'CHLone %s'%config.CHLONE_VERSION,
                          'vtkversion': 'VTK v%s' % config.VTK_VERSION,
                          'cythonversion': 'Cython v%s' % config.CYTHON_VERSION,
                          'hdf5version': 'HDF5 v%s' % config.HDF5_VERSION,
@@ -268,8 +267,8 @@ class Q7Main(QW, Ui_Q7ControlWindow):
         for i in self.getAllIdx():
             f = Q7FingerPrint.getFingerPrint(i)
             v = Q7FingerPrint.getView(i)
-            l = self.getLineFromIdx(i)
-            self.modifiedLine(l, f._status, f)
+            lines = self.getLineFromIdx(i)
+            self.modifiedLine(lines, f._status, f)
             try:
                 v.updateTreeStatus()
             except AttributeError:
@@ -315,7 +314,7 @@ class Q7Main(QW, Ui_Q7ControlWindow):
             tpitem = QTableWidgetItem(self.IC(QW.I_DIAG), '')
         if l[1] == QW.VIEW_TOOLS:
             tpitem = QTableWidgetItem(self.IC(QW.I_TOOLS), '')
-            l = l[0:2] + [None, None, None]
+            l = l[0:2] + [None, None, None]  # noqa FIXME
         if l[1] == QW.VIEW_LINK:
             tpitem = QTableWidgetItem(self.IC(QW.I_LINK), '')
         if l[1] == QW.VIEW_DIFF:
@@ -396,7 +395,7 @@ class Q7Main(QW, Ui_Q7ControlWindow):
             fgprint = self.signals.fgprint
         if len(fgprint) > 1:
             code = fgprint[1][0]
-            msg0 = fgprint[1][1]            
+            msg0 = fgprint[1][1]
             msg1 = fgprint[1][2]
             MSG.wError(self, code, msg0, msg1)
         elif fgprint.tree is None:

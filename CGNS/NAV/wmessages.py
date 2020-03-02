@@ -1,15 +1,13 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import str
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
-import sys
-import string
 import re
 
 from qtpy.QtWidgets import QTextEdit, QDialog
@@ -68,7 +66,7 @@ class Q7PythonEditorHighlighter(QSyntaxHighlighter):
         autovars = r"\bNODE\b|\bNAME\b|\bVALUE\b|\bSIDSTYPE\b|\bCHILDREN\b"
         autovars += r"|\bTREE\b|\bPATH\b|\bRESULT\b|\bARGS\b|\bPARENT\b"
         autovars += r"|\bLINKS\b|\bSKIPS\b"
-        numbers = r'[-+]?\d+' + '|[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?'
+        numbers = r'[-+]?\d+' + '|[-+]?(\d+(\.\d*)?|\.\d+)([eE][-+]?\d+)?'  # noqa
         comment = r'\#.*$'
         textstring = r'"[^"]*?"|\'[^\']*?\''
         self.f_keywords = QTextCharFormat()
@@ -152,8 +150,10 @@ class Q7MessageBox(QDialog, Ui_Q7MessageWindow):
         self._code = 0
 
     def setMode(self, cancel=False, again=False):
-        if (not again): self.cNotAgain.hide()
-        if (not cancel): self.bCANCEL.hide()
+        if (not again):
+            self.cNotAgain.hide()
+        if (not cancel):
+            self.bCANCEL.hide()
 
     def setLayout(self, text, btype=INFO,
                   cancel=False, again=False, buttons=('OK', 'Cancel')):
@@ -191,17 +191,19 @@ class Q7MessageBox(QDialog, Ui_Q7MessageWindow):
 def wError(control, code, info, error):
     txt = """<img source=":/images/icons/user-G.png">  <big>ERROR #%d</big><hr>
          %s<br>%s""" % (code, error, info)
-    if (code in OCTXT.IgnoredMessages): return True
+    if (code in OCTXT.IgnoredMessages):
+        return True
     msg = Q7MessageBox(control, code)
     msg.setWindowTitle("%s: Error" % OCTXT._ToolName)
-    msg.setLayout(txt, btype=ERROR, cancel=False, again=True, buttons=('Close',))
+    msg.setLayout(txt, btype=ERROR, cancel=False, again=True, buttons=('Close', ))
     return msg.showAndWait()
 
 
 def wQuestion(control, code, title, question, again=True, buttons=('OK', 'Cancel')):
     txt = """<img source=":/images/icons/user-M.png">
          <b> <big>%s</big></b><hr>%s""" % (title, question)
-    if (code in OCTXT.IgnoredMessages): return True
+    if (code in OCTXT.IgnoredMessages):
+        return True
     msg = Q7MessageBox(control, code)
     msg.setWindowTitle("%s: Question" % OCTXT._ToolName)
     msg.setLayout(txt, btype=QUESTION, cancel=True, again=again, buttons=buttons)
@@ -211,7 +213,8 @@ def wQuestion(control, code, title, question, again=True, buttons=('OK', 'Cancel
 def wInfo(control, code, title, info, again=True, buttons=('Close',)):
     txt = """<img source=":/images/icons/user-S.png">
          <b> <big>%s</big></b><hr>%s""" % (title, info)
-    if (code in OCTXT.IgnoredMessages): return True
+    if (code in OCTXT.IgnoredMessages):
+        return True
     msg = Q7MessageBox(control, code)
     msg.setWindowTitle("%s: Info" % OCTXT._ToolName)
     msg.setLayout(txt, btype=INFO, cancel=False, again=again, buttons=buttons)

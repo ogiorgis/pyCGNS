@@ -1,6 +1,6 @@
 #  -------------------------------------------------------------------------
 #  pyCGNS.VAL - Python package for CFD General Notation System - VALidater
-#  See license.txt file in the root directory of this Python module source  
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
@@ -22,9 +22,9 @@ def makeCorrectTree(vertexsize, cellsize):
     s = NPY.array([[vertexsize, cellsize, 0]], dtype='int32', order='F')
     z = CGL.newZone(b, 'Zone', s, CGK.Unstructured_s)
     g = CGL.newGridCoordinates(z, 'GridCoordinates')
-    d = CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((vertexsize), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((vertexsize), dtype='float64', order='F'))
-    d = CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateX_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateY_s, NPY.ones((vertexsize), dtype='float64', order='F'))
+    CGL.newDataArray(g, CGK.CoordinateZ_s, NPY.ones((vertexsize), dtype='float64', order='F'))
     return (T, b, z)
 
 

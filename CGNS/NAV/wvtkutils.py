@@ -1,16 +1,14 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict)
-
-from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
 from qtpy.QtCore import Qt, QEvent
 from qtpy.QtWidgets import QComboBox, QListWidget
+
 
 # -----------------------------------------------------------------
 class Q7ComboBox(QComboBox):

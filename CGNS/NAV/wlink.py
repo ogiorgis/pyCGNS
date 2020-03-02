@@ -1,22 +1,18 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import str, range
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
-import sys
-import string
 import os.path
 
 import CGNS.MAP as CGM
 import CGNS.PAT.cgnsutils as CGU
-import CGNS.PAT.cgnskeywords as CGK
 
-from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QFileDialog
 from qtpy.QtWidgets import (QTableWidgetItem, QStyledItemDelegate, QLineEdit, QHeaderView)
 
@@ -189,7 +185,6 @@ class Q7LinkList(QW, Ui_Q7LinkWindow):
         v.clear()
         v.setRowCount(0)
         lh = v.horizontalHeader()
-        lv = v.verticalHeader()
         h = ['S', 'Source Node', 'Linked-to file', 'Linked-to Node', 'Found in dir']
         for i, hstr in enumerate(h):
             hi = QTableWidgetItem(hstr)

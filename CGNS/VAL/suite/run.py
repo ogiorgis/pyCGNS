@@ -1,6 +1,6 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 #
@@ -8,7 +8,6 @@ from __future__ import unicode_literals
 import CGNS.VAL.simplecheck as CGV
 import CGNS.MAP
 import importlib
-import sys
 import os
 import string
 
@@ -24,17 +23,11 @@ try:
 except ImportError:
     pass
 
-try:
-    if 'CGNS_VAL_SAVE_FILES' in os.environ:
-        FILES = True
-except:
-    pass
+if 'CGNS_VAL_SAVE_FILES' in os.environ:
+    FILES = True
 
-try:
-    if 'CGNS_VAL_RUN_CGNSCHECK' in os.environ:
-        CGNSCHECK = True
-except:
-    pass
+if 'CGNS_VAL_RUN_CGNSCHECK' in os.environ:
+    CGNSCHECK = True
 
 
 def cgcheck(filenametag):
@@ -47,11 +40,8 @@ def runSuite(suite, trace, savefile=False, cgnscheck=False):
     count = 1
     if s is not None:
         p = os.path.split(s.__file__)[0]
-        l = os.listdir(p)
-        for t in l:
-            if ((t[0] != '_') and (t[-3:] == '.py')
-                and (t[0] in string.digits)
-                and (t[1] in string.digits)):
+        for t in os.listdir(p):
+            if ((t[0] != '_') and (t[-3:] == '.py') and (t[0] in string.digits) and (t[1] in string.digits)):
                 tlist.append(t[:-3])
     for t in tlist:
         tdlist = loadTree(suite, t)
@@ -105,5 +95,4 @@ def valTree(suite, t, tag, T, diag, trace, count):
 def runall():
     tlist = ('SIDS',)
     for s in tlist:
-        KEY = s
         runSuite(s, TRACE, FILES, CGNSCHECK)

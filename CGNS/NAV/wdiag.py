@@ -1,10 +1,10 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
-from builtins import (str, bytes, range, dict)
+from builtins import str
 
 
 import os
@@ -61,7 +61,6 @@ class Q7CheckList(QW, Ui_Q7DiagWindow):
                   again=False)
 
     def diagTableKeyPressEvent(self, event):
-        kmod = event.modifiers()
         kval = event.key()
         if kval == Qt.Key_Space:
             itlist = self.diagTable.selectedItems()
@@ -134,7 +133,7 @@ class Q7CheckList(QW, Ui_Q7DiagWindow):
         self.cFilter.clear()
         self._filterItems = {}
         diagfirst = self.cDiagFirst.isChecked()
-        warnings = self.cWarnings.isChecked()        
+        warnings = self.cWarnings.isChecked()
         diagstack = {}
         for path in plist:
             path_item = None
@@ -197,7 +196,7 @@ class Q7CheckList(QW, Ui_Q7DiagWindow):
         else:
             self._filterItems[diag.key].insert(0, dit)
         return dit
-        
+
     def reject(self):
         self.close()
 

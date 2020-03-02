@@ -1,38 +1,36 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
-from builtins import (str, bytes, range, dict)
 
 import sys
-import time
 
 from CGNS.pyCGNSconfig import HAS_MSW
-
-if HAS_MSW:
-    import ctypes
-    myappid = u'pycgns.pycgns.cglook.version' # arbitrary string
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
 from qtpy import QtCore
 from qtpy.QtWidgets import QApplication, QSplashScreen
 from qtpy.QtGui import QPixmap
-#from qtpy.QtGui import *
 from CGNS.NAV.wcontrol import Q7Main
+
+if HAS_MSW:
+    import ctypes
+    myappid = u'pycgns.pycgns.cglook.version'  # arbitrary string
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 splash = None
 wcontrol = None
+
 
 def closeSplash():
     global splash
     global wcontrol
     splash.finish(wcontrol)
-    
+
+
 # -----------------------------------------------------------------
 def run(args=[], files=[], datasets=[],
         flags=(False, False, False, False, False, False, False),
@@ -40,7 +38,7 @@ def run(args=[], files=[], datasets=[],
     hidecontrol = False
     global splash
     global wcontrol
-    
+
     if flags[4]:
         from CGNS.NAV.wquery import Q7Query
         Q7Query.loadUserQueries()
@@ -57,7 +55,7 @@ def run(args=[], files=[], datasets=[],
             splash.show()
             splash.showMessage("Release v%s" % OCTXT._ToolVersion,
                                QtCore.Qt.AlignHCenter | QtCore.Qt.AlignBottom)
-            timer = QtCore.QTimer.singleShot(3000,closeSplash)
+            # timer = QtCore.QTimer.singleShot(3000,closeSplash)
         app.processEvents()
         Q7Main.verbose = flags[2]
         wcontrol = Q7Main()

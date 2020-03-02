@@ -1,13 +1,13 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS.VAL - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS.VAL - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
 import CGNS.VAL.grammars.CGNS_VAL_USER_DEFAULT as CGV
 import CGNS.VAL.parse.messages as CGM
-import CGNS.PAT.cgnserrors     as CGE
+import CGNS.PAT.cgnserrors as CGE
 import CGNS.VAL.parse.findgrammar
 
 import sys
@@ -68,7 +68,7 @@ def run(T, trace, userlist, stop=False, warnings=[], failures=[]):
             diag.forceAsFailure(w)
         try:
             parser.checkTree(T, trace, stop=stop)
-        except (CGE.cgnsException,) as v:
+        except (CGE.cgnsException,):
             pass
         diag.merge(parser.log)
     return diag
@@ -79,7 +79,8 @@ def compliant(T, trace=False, userlist=['DEFAULT'], paths=[''], stop=False,
     ipath = '%s/lib/python%s.%s/site-packages/CGNS/VAL/grammars' % \
             (sys.prefix, sys.version_info[0], sys.version_info[1])
     sys.path.append(ipath)
-    for pp in paths: sys.path.append(pp)
+    for pp in paths:
+        sys.path.append(pp)
     diag = run(T, trace, userlist, stop=stop, warnings=warnings, failures=failures)
     ok = [True, []]
     for p in diag:

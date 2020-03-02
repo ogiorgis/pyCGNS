@@ -1,12 +1,12 @@
 #  -------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
 from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
-from builtins import (str, bytes, range, dict)
+from builtins import (str, range)
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 
@@ -27,7 +27,6 @@ from CGNS.NAV.Q7VTKWindow import Ui_Q7VTKWindow
 from CGNS.NAV.wfingerprint import Q7Window, Q7FingerPrint
 from CGNS.NAV.mparser import Mesh
 from CGNS.NAV.mparser import SIZE_PATTERN, LIST_PATTERN
-from CGNS.NAV.wfile import Q7File
 
 import CGNS.NAV.wmessages as MSG
 
@@ -1750,7 +1749,7 @@ class Q7InteractorStyleTrackballObject(vtk.vtkInteractorStyle):
         self._parent._vtkren.GetRenderWindow().Render()
 
     def Dolly(self, *args):
-        camera = self._parent._vtkren.GetActiveCamera()
+        # camera = self._parent._vtkren.GetActiveCamera()
         center = self._parent._vtkren.GetCenter()
         dy = self._parent._iren.GetEventPosition()[1] - self._parent._iren.GetLastEventPosition()[1]
         dyf = 10 * dy / center[1]
@@ -1874,7 +1873,7 @@ class Q7InteractorStyleRubberBandZoom(vtk.vtkInteractorStyleRubberBandZoom):
             self._parent.Panning = 1
 
     def MouseMove(self, obj, event):
-        index = self._parent.cRotationAxis.currentIndex()
+        # index = self._parent.cRotationAxis.currentIndex()
         if self._parent.Zooming:
             self.Dolly()
         if self._parent.Panning:
@@ -1899,7 +1898,7 @@ class Q7InteractorStyleRubberBandZoom(vtk.vtkInteractorStyleRubberBandZoom):
         return pt, center
 
     def Dolly(self, *args):
-        camera = self._parent._vtkren.GetActiveCamera()
+        # camera = self._parent._vtkren.GetActiveCamera()
         center = self._parent._vtkren.GetCenter()
         dy = self._parent._iren.GetEventPosition()[1] - self._parent._iren.GetLastEventPosition()[1]
         dyf = 10 * dy / center[1]
