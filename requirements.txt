@@ -1,6 +1,6 @@
-Cython==0.25
+Cython==0.29
 future
-numpy==1.12.0
+numpy
 pkgconfig
 mpi4py
 vtk
