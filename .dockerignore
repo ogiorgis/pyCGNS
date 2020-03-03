@@ -1,0 +1,8 @@
+.git
+.tox
+tox.ini
+readme.txt
+windows
+*.md
+ci
+build

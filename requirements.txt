@@ -2,7 +2,5 @@ Cython==0.25
 future
 numpy==1.12.0
 pkgconfig
-PyQt5
-PyQt5-sip
-QtPy
+mpi4py
 vtk
