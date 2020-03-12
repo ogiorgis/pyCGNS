@@ -459,7 +459,7 @@ if NAV and CONFIG.HAS_QTPY:
         log('Generate from updated Qt templates  ({}): {}'.format(cui, m))
         com = "{} --from-imports -o CGNS/NAV/G/{}.pyx CGNS/NAV/T/{}.ui".format(cui, m, m)
         os.system(fix_path(com))
-        com = "{} -a CGNS/NAV/G/{}.pyx".format(ccy, m)
+        com = "{} -X  language_level=3 -a CGNS/NAV/G/{}.pyx".format(ccy, m)
         os.system(fix_path(com))
 
     if (hasToGenerate('CGNS/NAV/R/Res.qrc', 'CGNS/NAV/Res_rc.py', args.force)):
@@ -474,7 +474,6 @@ if NAV and CONFIG.HAS_QTPY:
         module_logs.append("NAV   add  build (with VTK)")
     else:
         module_logs.append("NAV   add  build (without VTK)")
-
 else:
     module_logs.append("NAV   skip build *")
 
@@ -515,6 +514,10 @@ cls_txt = \
     Operating System :: MacOS :: MacOS X
     Operating System :: Microsoft :: Windows
     """
+
+# --- Force cython 3
+for e in ALL_EXTENSIONS:
+    e.cython_directives = {'language_level': "3"}
 
 # -------------------------------------------------------------------------
 setup(
