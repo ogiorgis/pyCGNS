@@ -3,7 +3,6 @@
 #  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
-from __future__ import unicode_literals
 from builtins import (str, bytes)
 
 from qtpy.QtCore import Qt

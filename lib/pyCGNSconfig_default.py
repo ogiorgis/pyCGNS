@@ -5,7 +5,6 @@
 # 
 # Default values, would be overwritten during install
 #
-from __future__ import unicode_literals
 import sys
 
 # --------------------------------------------------------------------

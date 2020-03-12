@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+#cython: language_level=3
 # Form implementation generated from reading ui file 'CGNS/NAV/T/Q7VTKPlotWindow.ui'
 #
 # Created: Thu Feb  6 17:40:35 2014

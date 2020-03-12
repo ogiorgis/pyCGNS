@@ -3,7 +3,6 @@
 #  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
-from __future__ import unicode_literals
 
 CHECK_NONE = 0
 CHECK_OK = CHECK_GOOD = CHECK_PASS = 1
