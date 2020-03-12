@@ -1901,7 +1901,7 @@ static PyObject* s2p_parseAndReadHDF(L3_Node_t   *anode,
       break;
     case L3E_C1:
     case L3E_C1ptr:
-      arraytype = NPY_CHAR;
+      arraytype = NPY_STRING;
       memsize = sizeof(char)*tsize;
       break;
     case L3E_R8:
@@ -2456,7 +2456,7 @@ PyObject* s2p_loadAsHDF(char     *dirname,
         strcat(buf4, buf3);
       }
       npy_dim_vals[0] = 64;
-      PyList_Append(tree, PyArray_New(&PyArray_Type, 1, npy_dim_vals, NPY_CHAR,
+      PyList_Append(tree, PyArray_New(&PyArray_Type, 1, npy_dim_vals, NPY_STRING,
         NULL, buf4, 0,
         NPY_ARRAY_BEHAVED | NPY_ARRAY_OWNDATA,
         NULL));
