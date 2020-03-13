@@ -110,9 +110,9 @@ class MAPTestCase(unittest.TestCase):
                                 "[300].*", save, self.HDF01,
                                 [None, None, self.T, None])
         self.unlink(self.HDF01)
-        flags = flags.DEFAULT | flags.UPDATE
-        self.assertRaisesRegex(CHLoneException,
-                                "[100].*", save, self.HDF01, self.T, flags=flags)
+        # flags = flags.DEFAULT | flags.UPDATE
+        # self.assertRaisesRegex(CHLoneException,
+        #                         "[100].*", save, self.HDF01, self.T, flags=flags)
 
     def test_003_Load_Args(self):
         from CGNS.MAP import load, flags
