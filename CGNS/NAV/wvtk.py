@@ -3,7 +3,6 @@
 #  See license.txt file in the root directory of this Python module source
 #  -------------------------------------------------------------------------
 #
-from builtins import (str, range)
 
 from CGNS.NAV.moption import Q7OptionContext as OCTXT
 

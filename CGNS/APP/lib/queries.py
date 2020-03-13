@@ -3,7 +3,6 @@
 #  See license.txt file in the root directory of this Python module source  
 #  -------------------------------------------------------------------------
 #
-from builtins import (str, bytes, range, dict)
 
 def asQuery(f):
     def prepostquery(node, parent, tree, links, skips, path, args, selected):

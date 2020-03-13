@@ -40,7 +40,6 @@ Changes by Fabian Wenzel, Jan. 2016
  Support for Python3
 """
 try:
-    from builtins import str
 except ImportError:
     from __builtin__ import str
 # Check whether a specific PyQt implementation was chosen

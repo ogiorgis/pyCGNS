@@ -42,7 +42,6 @@ Changes by Fabian Wenzel, Jan. 2016
 import vtk
 
 try:
-    from builtins import str
 except ImportError:
     from __builtin__ import str
 # Check whether a specific PyQt implementation was chosen

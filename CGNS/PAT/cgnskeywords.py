@@ -1,8 +1,8 @@
 #  ---------------------------------------------------------------------------
-#  pyCGNS - Python package for CFD General Notation System - 
-#  See license.txt file in the root directory of this Python module source  
+#  pyCGNS - Python package for CFD General Notation System -
+#  See license.txt file in the root directory of this Python module source
 #  ---------------------------------------------------------------------------
-#  
+#
 """
  TYPES, ENUMERATES, CONSTANTS, NAMES from CGNS/MLL
 
@@ -32,11 +32,7 @@
  [7] The _t type names are reserved for Cython, enums are then used as int:
  ctypedef int DataType_t
  int cg_array_read_as(int A, DataType_t type, void *Data)
- 
 """
-from builtins import (str, bytes, range, dict)
-
-# ----------------------------------------------------------------------------
 
 def stringAsKeyDict(l):
     return dict(zip(l, range(len(l))))

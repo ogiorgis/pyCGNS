@@ -4,8 +4,6 @@
 #  ---------------------------------------------------------------------------
 #
 from functools import cmp_to_key
-from builtins import (str, bytes, range, dict)
-
 import hashlib
 import os.path as op
 import re

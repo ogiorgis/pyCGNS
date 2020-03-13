@@ -3,8 +3,6 @@
 #  See license.txt file in the root directory of this Python module source
 #  ---------------------------------------------------------------------------
 #
-from builtins import (str, bytes, range, dict)
-
 import numpy
 
 import CGNS.PAT.cgnserrors as CE
