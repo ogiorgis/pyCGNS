@@ -1,0 +1,37 @@
+version: 1.0.{build}
+configuration: Release
+platform: x86
+clone_folder: C:\pyCGNS\src
+cache:
+- C:\Miniconda\pkgs -> appveyor.yml
+build_script:
+- cmd: >-
+    cd C:\pyCGNS\
+
+    set PATH=C:\Miniconda37\Scripts;%PATH%
+
+    conda create -y -n pycgns python=3.7
+
+    activate pycgns
+
+    conda install -y -q hdf5 cgns openmpi
+
+    conda install -y -q cython=0.29.0 numpy pyqt5
+
+    conda install -y -q pkgconfig
+
+    conda install -y -q mpi4py
+
+    conda install -y -q vtk
+
+    conda list
+
+    python setup.py build
+
+    python setup.py install
+
+test_script:
+- cmd: >-
+    activate pyCGNS
+
+    python -c "from sys import exit; import CGNS; import CGNS.MAP; import CGNS.PAT.test as ptest; ptest.run(); import CGNS.VAL.test as vtest; vtest.run()"
