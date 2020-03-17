@@ -10,7 +10,7 @@ cache:
 - '.git\lfs\objects'
 build_script:
 - cmd: >-
-    cd C:\pyCGNS\
+    cd C:\pyCGNS\src
 
     set PATH=C:\Miniconda37-x64\Scripts;%PATH%
 
