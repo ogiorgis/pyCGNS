@@ -18,7 +18,9 @@ build_script:
 
     activate pycgns
 
-    conda install -y -q hdf5 cgns openmpi
+    conda install -y -q hdf5
+
+    conda install -c kayarre cgns openmpi
 
     conda install -y -q cython=0.29.0 numpy pyqt5
 
