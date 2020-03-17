@@ -26,8 +26,6 @@ build_script:
 
     conda install -y -q pkgconfig
 
-    conda install -y -q vtk
-
     conda list
 
     python setup.py build
