@@ -22,7 +22,9 @@ build_script:
 
     conda install -y -q -c conda-forge cgns
 
-    conda install -y -q cython=0.29.0 numpy pyqt5
+    conda install -y -q cython=0.29.0 numpy
+
+    conda install -y -q -c dsdale24 pyqt5
 
     conda install -y -q pkgconfig
 
