@@ -12,7 +12,7 @@ build_script:
 - cmd: >-
     cd C:\pyCGNS\
 
-    set PATH=C:\Miniconda37\Scripts;%PATH%
+    set PATH=C:\Miniconda37-x64\Scripts;%PATH%
 
     conda create -y -n pycgns python=3.7
 
