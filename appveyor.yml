@@ -20,13 +20,11 @@ build_script:
 
     conda install -y -q hdf5
 
-    conda install -c kayarre cgns openmpi
+    conda install -c conda-forge cgns openmpi openmp
 
     conda install -y -q cython=0.29.0 numpy pyqt5
 
     conda install -y -q pkgconfig
-
-    conda install -y -q mpi4py
 
     conda install -y -q vtk
 
