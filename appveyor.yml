@@ -1,9 +1,13 @@
 version: 1.0.{build}
 configuration: Release
 platform: x86
+environment:
+  # Disable git-lfs to give appveyor a chance to overlay the cache files onto the repo
+  GIT_LFS_SKIP_SMUDGE: 1
 clone_folder: C:\pyCGNS\src
 cache:
 - C:\Miniconda\pkgs -> appveyor.yml
+- '.git\lfs\objects'
 build_script:
 - cmd: >-
     cd C:\pyCGNS\
