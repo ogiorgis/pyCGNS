@@ -24,8 +24,6 @@ build_script:
 
     conda install -y -q cython=0.29.0 numpy
 
-    conda install -y -q -c dsdale24 pyqt5
-
     conda install -y -q pkgconfig
 
     conda install -y -q vtk
